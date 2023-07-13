@@ -45,11 +45,39 @@ button {
     margin-top: 0.6em;
   }
   #quiz-container h1{
-    font-size: 200%;
+    font-size: 300%;
+    margin-bottom: 40px;
   }
-
+  #quiz-container h2{
+    font-size: 200%;
+    margin: 30px;
+  }
+  #choices-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #choices-container ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+  }
+  #choices-list li{
+    margin: 20px;
+    background: radial-gradient(circle,var(--cool-gray) 0%, var(--light-purple) 100%);
+    border-radius: 2px;
+    color: #13293d;
+    cursor: pointer;
+    border-color: var(--lime-green);
+    border: 3px;
+    padding: 10px;
+    width: 100%;
+    
+  }
   .hidden{
-    display: none;
+    display: none !important;
   }
 
   .visible{

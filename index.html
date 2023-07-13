@@ -16,10 +16,17 @@
     <section id = "quiz-container">
         <h1 id = "question">Click the button to take the quiz!</h1>
         <h2 id = "question-text" class = "hidden"></h2>
-        <button class = visible  id = "start-quiz">Start</button>
-        <div id = "choices-container">
-            <ul id = "choices-list"></ul>
+        <button class = "visible"  id = "start-quiz">Start</button>
+        <div id = "choices-container" class = "hidden">
+            <ul class = "hidden" id = "choices-list">
+                <li id = "option-one"></li>
+                <li id = "option-two"></li>
+                <li id = "option-three"></li>
+                <li id= "option-four"></li>
+            </ul>
+            <ul class = "hidden" id = "scoreboard"></ul>
         </div>
+        <footer id = "feedback"></footer>
     </section>
     <script src="./assets/script.js"></script>
 </body>
