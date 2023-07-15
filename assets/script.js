@@ -17,18 +17,18 @@ var playAgainBtn = document.querySelector("#play-again");
 var highScores = document.querySelector("#high-scores");
 const questions = [
     {
-        question: "What is Javascript?",
-        answers: ["one" , "two" , "three", "four"],
+        question: "What is JavaScript?",
+        answers: ["A programming language" , "A book about coffee" , "A language they write in the land of Java", "Your mother's maiden name"],
         correctAnswer: 0 
     },
     {
-        question: "Why is Javascript good?",
-        answers: ["one" , "two" , "three", "four"],
+        question: "What is an array?",
+        answers: ["A galaxy far, far away" , "A popular song from the 1980s" , "A collection of data items", "A critically acclaimed but commercially unsuccessful movie"],
         correctAnswer: 2
     },
     {
-        question: "Who is Javascript for?",
-        answers: ["one" , "two" , "three", "four"],
+        question: "What is a JavaScript function?",
+        answers: ["A party that JavaScript throws once a year" , "A block of code designed to perform a particular task" , "A way to get revenge on your enemies", "Your downfall"],
         correctAnswer: 1
     }
 ]

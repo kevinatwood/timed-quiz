@@ -83,6 +83,10 @@ button {
   padding: 20px;
  }
 
+ #choices-list li:hover{
+  cursor: pointer;
+ }
+
  #scoreboard{
   list-style-type: none;
 
