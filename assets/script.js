@@ -1,21 +1,38 @@
 var timeLeft = document.querySelector("#time-left");
 var startButton = document.querySelector("#start-quiz");
+var startContainerEl = document.querySelector("#start-container")
 var seconds = 101
-var choicesContainerEl = document.querySelector("#choices-container")
 var quizContainerEl = document.querySelector("#quiz-container")
 var choicesListEl = document.querySelector("#choices-list")
 var questionEl = document.querySelector("#question")
-var questionText = document.querySelector("#question-text")
-var optionOne = document.querySelector("#option-one")
-var optionTwo = document.querySelector("#option-two")
-var optionThree = document.querySelector("#option-three")
-var optionFour = document.querySelector("#option-four")
 var footer = document.querySelector("#feedback")
+var scoreboardContainerEl = document.querySelector("#scoreboard-container")
 var scoreboard = document.querySelector("#scoreboard")
+var enterInitalsContainerEl = document.querySelector("#enter-initials")
 var timerInterval ;
-var submitBtn ; 
-var input ; 
-var scores = [];
+var submitBtn= document.querySelector("#submit-btn"); 
+var input = document.querySelector("#initials-inpt"); 
+var scores =  JSON.parse(localStorage.getItem("scoreInfo")) || [];
+var playAgainBtn = document.querySelector("#play-again");
+var highScores = document.querySelector("#high-scores");
+const questions = [
+    {
+        question: "What is Javascript?",
+        answers: ["one" , "two" , "three", "four"],
+        correctAnswer: 0 
+    },
+    {
+        question: "Why is Javascript good?",
+        answers: ["one" , "two" , "three", "four"],
+        correctAnswer: 2
+    },
+    {
+        question: "Who is Javascript for?",
+        answers: ["one" , "two" , "three", "four"],
+        correctAnswer: 1
+    }
+]
+var currentQuestionNum = 0;
 
 //Start timer 
 function startTimer(){
@@ -25,8 +42,8 @@ function startTimer(){
 
         if (seconds === 0){
             clearInterval(timerInterval);
+            endGame()
             
-            //add function to end game
         } else if (seconds < 0){
             timeLeft.textContent = 0
             clearInterval(timerInterval);
@@ -34,132 +51,94 @@ function startTimer(){
 
     }, 1000)
 }
-//Display first question and choices
 
-function questionOne(){
-    questionEl.textContent = "Question One"
-    startButton.setAttribute("class" , "hidden")
-    questionText.setAttribute("class", "visible")
-    questionText.textContent = "What is JavaScript?"
-    choicesListEl.setAttribute("class", "visible")
-    choicesContainerEl.setAttribute("class", "visible")
-    optionOne.textContent = "one"
-    optionOne.setAttribute("class", "correct")
-    optionTwo.textContent = "two"
-    optionTwo.setAttribute("class", "incorrect")
-    optionThree.textContent = "three"
-    optionThree.setAttribute("class", "incorrect")
-    optionFour.textContent = "four"
-    optionFour.setAttribute("class", "incorrect")
 
-    choicesContainerEl.addEventListener("click", function (event){
-        var element = event.target;
-    if (element.matches(".correct") === true){
-        footer.textContent = "Correct!"
-        return questionTwo()
-    } else if (element.matches(".incorrect")){
-        footer.textContent = "Incorrect"
-        seconds-=15
-        return questionTwo()
+// display questions and options
+function initQuestion() {
+    const currentQuestion = questions[currentQuestionNum];
+     if (currentQuestionNum < questions.length){
+    quizContainerEl.setAttribute("class", "visible")
+    questionEl.textContent = currentQuestion.question;
+    choicesListEl.textContent = ""
+    startContainerEl.setAttribute("class" , "hidden");
+    for (var i = 0; i < currentQuestion.answers.length; i++) {
+      var li = document.createElement("li");
+      li.textContent = currentQuestion.answers[i];
+      li.setAttribute("data-idx", i);
+      choicesListEl.appendChild(li);
     }
-    })
-}
-
-function questionTwo(){
-    questionEl.textContent = "Question Two"
-    questionText.textContent = "Who is JavaScript?"
-    optionOne.textContent = "one"
-    optionOne.setAttribute("class", "incorrect")
-    optionTwo.textContent = "two"
-    optionThree.textContent = "three"
-    optionThree.classList.remove("incorrect")
-    optionThree.setAttribute("class", "correct")
-    optionFour.textContent = "four"
-
-    choicesContainerEl.addEventListener("click", function (event){
-        var element = event.target;
-    if (element.matches(".correct") === true){
-        footer.textContent = "Correct!"
-        return questionThree()
-    } else if (element.matches(".incorrect")){
-        footer.textContent = "Incorrect"
-        return questionThree()
-    }
-    })
-}
-
-function questionThree(){
-    questionEl.textContent = "Question Three"
-    questionText.textContent = "Who is JavaScript made for?"
-    optionOne.textContent = "one"
-    optionOne.setAttribute("class", "incorrect")
-    optionTwo.textContent = "two"
-    optionTwo.setAttribute("class", "incorrect")
-    optionThree.textContent = "three"
-    optionThree.setAttribute("class", "incorrect")
-    optionFour.textContent = "four"
-    optionFour.setAttribute("class", "correct")
-
-    choicesContainerEl.addEventListener("click", function (event){
-        var element = event.target;
-    if (element.matches(".correct") === true){
-        footer.textContent = "Correct!"
-        clearInterval(timerInterval);
-        return endGame()
-    } else if (element.matches(".incorrect")){
-        footer.textContent = "Incorrect"
-        clearInterval(timerInterval);
+    } else {
         timeLeft.textContent = seconds
-        return endGame()
+        clearInterval(timerInterval);
+        endGame();
     }
-    })
-  
-}
-function getScores(){
-    var storedScores = JSON.parse(localStorage.getItem("scoreInfo"))
 
+  }
+// add class to correct question
+  function handleAnswerQuestion(evt) {
+    const currentQuestion = questions[currentQuestionNum];
+    const correctAnswer = currentQuestion.correctAnswer;
+    var target = evt.target;
+    var idx = target.getAttribute("data-idx");
+    if (idx == correctAnswer) {
+      footer.textContent = "you are correct!";
+      currentQuestionNum++
+      initQuestion()
+    } else  {
+      footer.textContent = "you are wrong!";
+      seconds -= 15
+      currentQuestionNum++
+      initQuestion()
+    } 
+  }
+  
+//   Get and display scores from local storage on screen, sorted in descending order
+function getScores(){
+     var storedScores = JSON.parse(localStorage.getItem("scoreInfo")) || []
+    
     if (storedScores !== null){
-        scores = storedScores;
+
+        scores = storedScores.sort((a,b) => {
+            return b.score - a.score;
+        });
         console.log(storedScores)
         console.log(scores)
     }
-
-    showScores()
-}
-function showScores(){
-    questionEl.textContent = "Scoreboard";
-    submitBtn.setAttribute("class" , "hidden")
-    choicesContainerEl.setAttribute("class", "visible")
-    footer.setAttribute("class", "hidden")
-    input.setAttribute("class", "hidden")
-    scoreboard.setAttribute("class", "visible")
-    questionText.textContent = ""
-
+    scoreboardContainerEl.setAttribute("class", "visible")
+    startContainerEl.setAttribute("class", "hidden")
+    enterInitalsContainerEl.setAttribute("class", "hidden")
+    quizContainerEl.setAttribute("class", "hidden")
+    clearInterval(timerInterval)
+    timeLeft.textContent = 0
     scoreboard.innerHTML = "";
-
+    console.log(scores)
     for (var i = 0; i < scores.length; i++){
-        var score = scores[i];
-        var li =document.createElement("li");
-        li.textContent = scores 
+        var scoreEl = scores[i];
+        var li = document.createElement("li");
+        li.textContent = "Name: " + scoreEl.initials  + " Score: " + scoreEl.score;
         scoreboard.appendChild(li);
+        console.log(scoreEl)
         console.log(li)
 
     }
-
 }
-//once time runs out or questions are over, player can enter initals in a score screen. Score is time remaining time
+
+// brings user back to start page
+function playAgain (){
+    currentQuestionNum = 0
+    seconds = 101
+    scoreboardContainerEl.setAttribute("class", "hidden")
+    quizContainerEl.setAttribute("class", "hidden")
+    startContainerEl.setAttribute("class", "visible")
+}
+// ends the game and brings up a screen where the user can enter their name to add themselves to the leaderboard
 function endGame(){
-    footer.setAttribute("class", "visible")
-    questionEl.textContent = "Game Over!"
-    questionText.textContent = "Enter your initals to save your score!"
-    footer.textContent = "Score =" + seconds
-     input = document.createElement("input");
-    choicesContainerEl.setAttribute("class", "hidden");
-    choicesListEl.setAttribute("class", "hidden");
-    quizContainerEl.appendChild(input);
-    submitBtn = document.createElement("button");
-    quizContainerEl.appendChild(submitBtn);
-    submitBtn.textContent= "Submit"
+    quizContainerEl.setAttribute("class", "hidden")
+    enterInitalsContainerEl.setAttribute("class", "visible")
+    submitBtn.textContent = "Submit"
+    var scoreReport = document.querySelector("#score-report")
+    scoreReport.textContent = "Score =" + seconds
+    input.value = ""
     submitBtn.addEventListener("click", function(event){
         var scoreInfo = {
             initials: input.value.trim(),
@@ -167,13 +146,19 @@ function endGame(){
         }
         scores.push(scoreInfo)
         localStorage.setItem("scoreInfo", JSON.stringify(scores))
+        enterInitalsContainerEl.setAttribute("class", "hidden")
         getScores()
     })
     
 }
-//add event listener to start game on button press
+
+//start quiz function and adds event listeners
 function startQuiz(){
+    footer.textContent= ""
     startTimer()
-    questionOne()
+    initQuestion();
 }
-startButton.addEventListener("click" , startQuiz)
+    startButton.addEventListener("click" , startQuiz)
+    choicesListEl.addEventListener("click", handleAnswerQuestion);
+    playAgainBtn.addEventListener("click", playAgain)
+    highScores.addEventListener("click", getScores)

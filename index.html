@@ -8,25 +8,33 @@
 </head>
 <body>
     <header class="top-bar">
-        <div id ="high-scores">
+        <button id = "high-scores">
             View High Scores
-        </div>
+        </button>
         <div id = "timer">Time: <span id = "time-left">0</span></div>
     </header>
-    <section id = "quiz-container">
-        <h1 id = "question">Click the button to take the quiz!</h1>
-        <h2 id = "question-text" class = "hidden"></h2>
-        <button class = "visible"  id = "start-quiz">Start</button>
-        <div id = "choices-container" class = "hidden">
-            <ul class = "hidden" id = "choices-list">
-                <li id = "option-one"></li>
-                <li id = "option-two"></li>
-                <li id = "option-three"></li>
-                <li id= "option-four"></li>
-            </ul>
-            <ul class = "hidden" id = "scoreboard"></ul>
-        </div>
+
+    <section id = start-container>
+        <h1 id = "start-message">Click the button to take the quiz!</h1>
+        <button  id = "start-quiz">Start</button>
+    </section>
+    <section id = "quiz-container" class ="hidden">
+        <h1 id = "question"></h1>
+            <ul  id = "choices-list">
+            </ul>    
         <footer id = "feedback"></footer>
+    </section>
+    <section id = "enter-initials" class = "hidden">
+        <h1>Game Over!</h1>
+        <h2>Enter your initals to see your place on the leaderboard!</h2>
+        <p id = "score-report"></p>
+        <input type = "text" id ="initials-inpt">
+        <button id = "submit-btn"></button>
+    </section>
+    <section id ="scoreboard-container" class = "hidden">
+        <h1>Scoreboard</h1>
+        <button id = "play-again">Play Again</button>
+        <ul id = "scoreboard"></ul>
     </section>
     <script src="./assets/script.js"></script>
 </body>

@@ -9,18 +9,21 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     font-size: 16px;
 }
+
+/* Section and heading stylings */
 .top-bar {
     background-color: var(--cool-gray);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 40px;
+    height: fit-content;
 }
 
 .top-bar div{
     margin: 0px 10px;
 }
-#quiz-container{
+
+section{
     text-align: center;
     margin-top: 35px;
     display: flex;
@@ -28,6 +31,17 @@ body{
     flex-direction: column;
     align-items: center;
 }
+
+#quiz-container h1{
+  font-size: 300%;
+  margin-bottom: 40px;
+}
+#quiz-container h2{
+  font-size: 200%;
+  margin: 30px;
+}
+
+/* button stylings */
 button {
     background: radial-gradient(circle,var(--cool-gray) 0%, var(--light-purple) 100%);
     border-radius: 8px;
@@ -44,42 +58,49 @@ button {
     transition-timing-function: linear;
     margin-top: 0.6em;
   }
-  #quiz-container h1{
-    font-size: 300%;
-    margin-bottom: 40px;
+
+  #high-scores{
+    max-width: fit-content;
+    margin: 3px;
+    padding: 20;
   }
-  #quiz-container h2{
-    font-size: 200%;
-    margin: 30px;
-  }
-  #choices-container{
-    width: 100%;
-    display: flex;
+
+  #play-again{
+    max-width: fit-content;
+  
+   }
+
+  /* List stylings */
+  #choices-list{
+    list-style: none;
+    max-width: 600px;
     justify-content: center;
-  }
-  #choices-container ul{
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: fit-content;
-  }
-  #choices-list li{
-    margin: 20px;
-    background: radial-gradient(circle,var(--cool-gray) 0%, var(--light-purple) 100%);
-    border-radius: 2px;
-    color: #13293d;
-    cursor: pointer;
-    border-color: var(--lime-green);
-    border: 3px;
-    padding: 10px;
-    width: 100%;
     
   }
+ #choices-list li{
+  margin: 20px;
+  background: radial-gradient(circle,var(--cool-gray) 0%, var(--light-purple) 100%);
+  padding: 20px;
+ }
+
+ #scoreboard{
+  list-style-type: none;
+
+ }
+ 
+ #scoreboard li {
+  margin: 20px;
+  border: var(--cool-gray);
+  border-width: 2px;
+  padding:20px;
+  border-style: solid;
+ }
+
+ /* hidden and visible classes */
   .hidden{
     display: none !important;
   }
 
   .visible{
-    display: block;
+    display: flex;
   }
